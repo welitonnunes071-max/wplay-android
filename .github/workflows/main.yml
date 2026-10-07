@@ -36,7 +36,10 @@ jobs:
         run: |
           echo "android.useAndroidX=true" > build_wplay/Wplay_2_0/gradle.properties
           echo "android.enableJetifier=true" >> build_wplay/Wplay_2_0/gradle.properties
-      
+            - name: Ajustar Java para 17
+          run: |
+          sed -i 's/JavaVersion.VERSION_1_8/JavaVersion.VERSION_17/g' build_wplay/Wplay_2_0/app/build.gradle
+          sed -i "s/jvmTarget = ['\"]1.8['\"]/jvmTarget = '17'/g" build_wplay/Wplay_2_0/app/build.gradle
     
       - name: Compilar APK
         run: |
