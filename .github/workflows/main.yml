@@ -34,11 +34,9 @@ jobs:
       - name: Ativar AndroidX
         run: |
           printf '%s\n' 'android.useAndroidX=true' 'android.enableJetifier=true' >> build_wplay/Wplay_2_0/gradle.properties
-
-      - name: Ajustar Java para 17
+      - name: Ajustar Java e Kotlin para 17
         run: |
-          sed -i 's/JavaVersion.VERSION_1_8/JavaVersion.VERSION_17/g' build_wplay/Wplay_2_0/app/build.gradle
-          sed -i 's/jvmTarget = ["'\'']1.8["'\'']/jvmTarget = ["'\'']17["'\'']/g' build_wplay/Wplay_2_0/app/build.gradle
+          python3 -c "p='build_wplay/Wplay_2_0/app/build.gradle'; s=open(p).read(); s=s.replace('JavaVersion.VERSION_1_8','JavaVersion.VERSION_17').replace('jvmTarget = \"1.8\"','jvmTarget = \"17\"').replace(\"jvmTarget = '1.8'\", \"jvmTarget = '17'\"); open(p,'w').write(s)"
 
       - name: Compilar APK
         run: |
