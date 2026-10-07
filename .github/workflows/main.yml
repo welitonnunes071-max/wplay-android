@@ -31,7 +31,13 @@ jobs:
       - name: Descompactar Wplay
         run: |
           unzip -q Wplay_2_0_v3_Mobile_Build.zip -d build_wplay
-
+      
+      - name: Ativar AndroidX
+        run: |
+          echo "android.useAndroidX=true" > build_wplay/Wplay_2_0/gradle.properties
+          echo "android.enableJetifier=true" >> build_wplay/Wplay_2_0/gradle.properties
+      
+    
       - name: Compilar APK
         run: |
           cd build_wplay/Wplay_2_0
