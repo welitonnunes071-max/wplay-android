@@ -32,10 +32,9 @@ jobs:
         run: |
           unzip -q Wplay_2_0_v3_Mobile_Build.zip -d build_wplay
       
-      - name: Ativar AndroidX
-        run: |
-          echo "android.useAndroidX=true" > build_wplay/Wplay_2_0/gradle.properties
-          echo "android.enableJetifier=true" >> build_wplay/Wplay_2_0/gradle.properties
+            - name: Ativar AndroidX
+          run: |
+          printf '%s\n' 'android.useAndroidX=true' 'android.enableJetifier=true' > build_wplay/Wplay_2_0/gradle.properties
             - name: Ajustar Java para 17
           run: |
           sed -i 's/JavaVersion.VERSION_1_8/JavaVersion.VERSION_17/g' build_wplay/Wplay_2_0/app/build.gradle
