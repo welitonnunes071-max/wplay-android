@@ -30,7 +30,7 @@ jobs:
 
       - name: Descompactar Wplay
         run: |
-          unzip -q Wplay_2_0_v3_Mobile_Build.zip -d build_wplay
+          python3 -c "import zipfile; zipfile.ZipFile('Wplay_2_0_v3_Mobile_Build.zip').extractall('build_wplay')"
       
             - name: Ativar AndroidX
           run: |
