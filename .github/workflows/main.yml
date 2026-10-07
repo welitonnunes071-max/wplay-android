@@ -1,0 +1,45 @@
+name: Build Wplay APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Configurar Android
+        uses: android-actions/setup-android@v3
+
+      - name: Instalar Android SDK
+        run: |
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Configurar Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Descompactar Wplay
+        run: |
+          unzip -q Wplay_2_0_v3_Mobile_Build.zip -d build_wplay
+
+      - name: Compilar APK
+        run: |
+          cd build_wplay/Wplay_2_0
+          gradle assembleDebug --no-daemon
+
+      - name: Disponibilizar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Wplay-APK
+          path: build_wplay/Wplay_2_0/app/build/outputs/apk/debug/app-debug.apk
